@@ -4,9 +4,9 @@
   "description": "A node wrapper around pocketsphinx_continuous",
   "main": "index.js",
   "scripts": {
-    "test": "npm run lint && mocha",
-    "coverage": "istanbul cover -- _mocha",
-    "lint": "eslint ."
+    "test": "npm run lint && node_modules/.bin/mocha",
+    "coverage": "node_modules/.bin/istanbul cover -- _mocha",
+    "lint": "node_modules/.bin/eslint ."
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
   "devDependencies": {
     "coveralls": "^3.0.0",
     "eslint": "^5.0.0",
+    "eslint-config-recommended": "^4.0.0",
     "istanbul": "^0.4.2",
     "mocha": "^5.0.0",
     "proxyquire": "^2.0.0",

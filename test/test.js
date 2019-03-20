@@ -1,24 +1,24 @@
-'use strict';
 require('should');
-var proxyquire = require('proxyquire');
-var util = require('util');
-var EventEmitter = require('events').EventEmitter;
+const proxyquire = require('proxyquire');
+const util = require('util');
+const EventEmitter = require('events').EventEmitter;
 
 function CbStub() {
   function StubEmitter() {
     EventEmitter.call(this);
   }
+
   util.inherits(StubEmitter, EventEmitter);
-  var stubSpawn = new StubEmitter();
+  const stubSpawn = new StubEmitter();
   stubSpawn.stdout = new StubEmitter();
   stubSpawn.stderr = new StubEmitter();
-  var cbStub = {
+  const cbStub = {
     obj: {
-      spawn: function() {
+      spawn() {
         return stubSpawn;
       },
-      emit: function() {
-        stubSpawn.emit.apply(stubSpawn, arguments);
+      emit(...args) {
+        stubSpawn.emit(...args);
       }
     },
     streams: {
@@ -26,22 +26,24 @@ function CbStub() {
       out: stubSpawn.stdout
     }
   };
+
   return cbStub;
 }
 
-describe('Complete test suite', function() {
-  it('Should expose a function', function() {
+describe('Complete test suite', () => {
+  it('Should expose a function', () => {
     require('..').should.be.instanceOf(Function);
   });
-  it('Should emit the expected data', function(done) {
-    var tc = new CbStub();
-    var Psc = proxyquire('..', {
-      'child_process': tc.obj
+
+  it('Should emit the expected data', done => {
+    const tc = new CbStub();
+    const Psc = proxyquire('..', {
+      child_process: tc.obj
     });
-    var psc = new Psc({
+    const psc = new Psc({
       setId: 'testset'
-    })
-    psc.on('data', function(d) {
+    });
+    psc.on('data', d => {
       d.should.equal('TEST');
       done();
     });
@@ -49,33 +51,36 @@ describe('Complete test suite', function() {
     tc.streams.out.emit('data', '');
     tc.streams.out.emit('data', 'TEST');
   });
-  it('Should error and such in expected manner', function(done) {
-    var tc = new CbStub();
-    var Psc = proxyquire('..', {
-      'child_process': tc.obj
+
+  it('Should error and such in expected manner', done => {
+    const tc = new CbStub();
+    const Psc = proxyquire('..', {
+      child_process: tc.obj
     });
-    var psc = new Psc({
+    const psc = new Psc({
       setId: Math.random(),
       verbose: true
     });
-    var testCalled = false;
-    psc.on('data', function(d) {
-      if (d == 'data') {
+    let testCalled = false;
+
+    psc.on('data', d => {
+      if (d === 'data') {
         // Also cool.
         return;
       }
       d.should.equal('TEST2');
     });
-    psc.on('test2', function() {
+
+    psc.on('test2', () => {
       testCalled = true;
     });
-    var count = 0;
-    psc.on('error', function(err) {
-      if (count == 0) {
+
+    let count = 0;
+    psc.on('error', err => {
+      if (count === 0) {
         err.should.equal(42);
         count++;
-      }
-      else {
+      } else {
         err.should.equal(43);
         testCalled.should.equal(true);
         done();

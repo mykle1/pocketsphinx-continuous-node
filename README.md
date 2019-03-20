@@ -22,11 +22,11 @@ Since pocketsphinx_continuous is able to use dictionaries as arguments, you can 
 ## Usage
 
 ```js
-var Psc = require('pocketsphinx-continuous');
-var ps = new Psc({
+const Psc = require('pocketsphinx-continuous');
+const ps = new Psc({
   setId: '1337',  // A "set id". See explanation below.
   verbose: false, // Setting this to true will give you a whole lot of debug output in your console.
-	autostart: true|false  // optional flag to enable microphone sharing
+  autostart: true|false  // optional flag to enable microphone sharing
 });
 ```
 
@@ -63,12 +63,12 @@ When you use this module, make sure these files are in the working directory.
 
 ### methods
 
-####  startListening
+####  start
 
 start the daemon that does speech to text 
 
 
-####  stopListening
+####  stop
 
 stop the daemon that does speech to text, free microphone for other modules
 

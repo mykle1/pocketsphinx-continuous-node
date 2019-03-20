@@ -1,9 +1,24 @@
 {
+  "extends": ["esnext", "esnext/style-guide", "node", "node/style-guide"],
+  "parserOptions": {
+    "ecmaVersion": 2017,
+    "sourceType": "module"
+  },
   "env": {
-    "node": true
+    "node": true,
+    "es6": true
   },
   "rules": {
-    "quotes": [2, "single"]
-  },
-  "extends": "eslint:recommended"
+    "quotes": [2, "single"],
+    "import/no-commonjs": 0,
+    "import/no-nodejs-modules": 0,
+    "semi": 0,
+    "comma-dangle": 0,
+    "indent": ["error", 2],
+    "template-curly-spacing": 0,
+    "no-console": 0,
+    "curly": ["error", "all"],
+    "array-bracket-spacing": 0,
+    "space-before-function-paren": 0
+  }
 }
