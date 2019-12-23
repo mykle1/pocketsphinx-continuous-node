@@ -39,9 +39,9 @@ PocketSphinxContinuous.prototype.start = function() {
       '-inmic',
       'yes',
       '-lm',
-      `modules/MMM-VoiceCommander/${this.setId}.lm`,
+      `modules/${this.setId}/${this.setId}.lm`,
       '-dict',
-      `modules/MMM-VoiceCommander/${this.setId}.dic`
+      `modules/${this.setId}/${this.setId}.dic`
     ]);
 
     this._psc.stdout.on('data', data => {
